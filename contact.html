@@ -10,16 +10,75 @@
       font-family: Arial, sans-serif;
       background: #f9fafc;
       color: #333;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
     }
-    .contact-box {
-      max-width: 500px;
-      width: 90%;
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #0a3d62;
+      padding: 10px 20px;
+      color: #fff;
+    }
+    .navbar .logo {
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+    }
+    .navbar .logo span {
+      margin-left: 8px;
+      font-weight: bold;
+    }
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      margin: 0;
+      padding: 0;
+    }
+    .navbar ul li {
+      margin-left: 20px;
+    }
+    .navbar ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+    .hamburger div {
+      width: 25px;
+      height: 3px;
       background: #fff;
+      margin: 4px 0;
+    }
+    @media (max-width: 768px) {
+      .navbar ul {
+        display: none;
+        flex-direction: column;
+        background: #0a3d62;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 200px;
+        text-align: right;
+        padding: 10px;
+      }
+      .navbar ul.active {
+        display: flex;
+      }
+      .hamburger {
+        display: flex;
+      }
+    }
+    /* Contact Box */
+    .contact-box {
+      max-width: 600px;
+      margin: 60px auto;
       padding: 30px;
+      background: #fff;
       border-radius: 10px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
       text-align: center;
@@ -44,6 +103,23 @@
 </head>
 <body>
 
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">🏠 <span>PF Smart Structures</span></div>
+    <ul id="menu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="jobs.html">Jobs</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="hamburger" onclick="toggleMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </nav>
+
+  <!-- Contact Content -->
   <div class="contact-box">
     <h1>Contact Us</h1>
     <p><b>📧 Email:</b> <a href="mailto:pfsmartstructures@gmail.com">pfsmartstructures@gmail.com</a></p>
@@ -51,5 +127,10 @@
     <p><b>🏠 Address:</b> 5, Olaniran Street, Ojomo Billyway, Irawo</p>
   </div>
 
+  <script>
+    function toggleMenu() {
+      document.getElementById("menu").classList.toggle("active");
+    }
+  </script>
 </body>
 </html>
