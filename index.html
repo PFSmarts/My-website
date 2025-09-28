@@ -341,36 +341,11 @@
   </footer>
 
   <script>
-    let total = 0;
-
-    function addToCart(item, price) {
-      const cartItems = document.getElementById('cart-items');
-      const li = document.createElement('li');
-      li.innerHTML = item + " - £" + price + 
-        " <button class='remove-btn' onclick='removeItem(this,"+price+")'>❌</button>";
-      cartItems.appendChild(li);
-
-      total += price;
-      updateTotal();
-    }
-
-    function removeItem(button, price) {
-      const li = button.parentElement;
-      li.remove();
-      total -= price;
-      updateTotal();
-    }
-
-    function updateTotal() {
-      document.getElementById('total').textContent = "Total: £" + total;
-    }
-  function toggleMenu() {
-    document.getElementById("menu").classList.toggle("active");
-  }
-    
-let cartArray = []; // tracks {item, price}
+    // Track items in an array
+let cartArray = [];
 let totalAmount = 0;
 
+// Add item to cart (body + navbar)
 function addToCart(item, price) {
   // Body cart
   const cartItems = document.getElementById('cart-items');
@@ -379,13 +354,14 @@ function addToCart(item, price) {
   cartItems.appendChild(li);
 
   // Add to array
-  cartArray.push({item, price});
+  cartArray.push({ item, price });
   totalAmount += price;
 
   updateBodyTotal();
   updateNavbarCart();
 }
 
+// Remove item from cart
 function removeItem(button) {
   const li = button.parentElement;
   const text = li.textContent.split(" - £")[0];
@@ -393,7 +369,7 @@ function removeItem(button) {
 
   // Remove from array
   const index = cartArray.findIndex(i => i.item === text && i.price === price);
-  if(index !== -1) cartArray.splice(index, 1);
+  if (index !== -1) cartArray.splice(index, 1);
   totalAmount -= price;
 
   li.remove();
@@ -401,10 +377,12 @@ function removeItem(button) {
   updateNavbarCart();
 }
 
+// Update body cart total
 function updateBodyTotal() {
   document.getElementById('total').textContent = `Total: £${totalAmount}`;
 }
 
+// Update navbar cart (popup)
 function updateNavbarCart() {
   const navbarList = document.getElementById('navbar-cart-items');
   const navbarCount = document.getElementById('navbar-cart-count');
@@ -421,6 +399,7 @@ function updateNavbarCart() {
   navbarTotal.textContent = totalAmount;
 }
 
+// Empty the cart
 function emptyCart() {
   document.getElementById('cart-items').innerHTML = "";
   cartArray = [];
@@ -429,9 +408,15 @@ function emptyCart() {
   updateNavbarCart();
 }
 
+// Toggle navbar cart popup
 function toggleNavbarCart() {
   const popup = document.getElementById('navbar-cart-popup');
   popup.style.display = popup.style.display === 'block' ? 'none' : 'block';
+}
+
+// Toggle mobile menu
+function toggleMenu() {
+  document.getElementById("menu").classList.toggle("active");
 }
 
 </script>
