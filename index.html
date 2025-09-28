@@ -315,13 +315,15 @@
   <span class="cart-link" onclick="toggleNavbarCart()">
     🛒 Cart <span id="navbar-cart-count">0</span>
   </span>
-  <div id="navbar-cart-popup" class="navbar-cart-popup">
-    <ul id="navbar-cart-items"></ul>
-    <div>Total: £<span id="navbar-total">0</span></div>
+ <div id="navbar-cart-popup" class="navbar-cart-popup">
+  <ul id="navbar-cart-items"></ul>
+  <div>Total: £<span id="navbar-total">0</span></div>
+  <div class="buttons-container">
     <button class="empty-btn" onclick="emptyCart()">🗑️ Empty Cart</button>
     <a href="checkout.html" class="checkout-btn">Checkout</a>
   </div>
 </div>
+
 
 
 
@@ -435,23 +437,50 @@ function updateBodyTotal() {
   document.getElementById('total').textContent = `Total: £${totalAmount}`;
 }
 
-// Update navbar cart popup
 function updateNavbarCart() {
   const navbarList = document.getElementById('navbar-cart-items');
   const navbarCount = document.getElementById('navbar-cart-count');
   const navbarTotal = document.getElementById('navbar-total');
 
+  // Clear current items
   navbarList.innerHTML = "";
 
+  // Add each cart item
   cartArray.forEach(i => {
     const li = document.createElement('li');
     li.innerHTML = `${i.item} - £${i.price} <button class='remove-btn' onclick='removeItem(this)'>❌</button>`;
     navbarList.appendChild(li);
   });
 
+  // Update the cart count and total
   navbarCount.textContent = cartArray.length;
   navbarTotal.textContent = totalAmount;
+
+  // Ensure buttons container exists only once
+  let buttonsContainer = document.querySelector('#navbar-cart-popup .buttons-container');
+  if (!buttonsContainer) {
+    buttonsContainer = document.createElement('div');
+    buttonsContainer.className = 'buttons-container';
+
+    // Empty Cart button
+    const emptyBtn = document.createElement('button');
+    emptyBtn.className = 'empty-btn';
+    emptyBtn.textContent = '🗑️ Empty Cart';
+    emptyBtn.onclick = emptyCart;
+    buttonsContainer.appendChild(emptyBtn);
+
+    // Checkout button
+    const checkoutBtn = document.createElement('a');
+    checkoutBtn.className = 'checkout-btn';
+    checkoutBtn.href = 'checkout.html';
+    checkoutBtn.textContent = 'Checkout';
+    buttonsContainer.appendChild(checkoutBtn);
+
+    // Append buttons container to popup
+    document.getElementById('navbar-cart-popup').appendChild(buttonsContainer);
+  }
 }
+
 
 // Empty cart (both body & navbar)
 function emptyCart() {
