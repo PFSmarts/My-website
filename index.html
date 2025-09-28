@@ -436,7 +436,6 @@ function removeItem(button) {
 function updateBodyTotal() {
   document.getElementById('total').textContent = `Total: £${totalAmount}`;
 }
-
 function updateNavbarCart() {
   const navbarList = document.getElementById('navbar-cart-items');
   const navbarCount = document.getElementById('navbar-cart-count');
@@ -455,30 +454,6 @@ function updateNavbarCart() {
   // Update the cart count and total
   navbarCount.textContent = cartArray.length;
   navbarTotal.textContent = totalAmount;
-
-  // Ensure buttons container exists only once
-  let buttonsContainer = document.querySelector('#navbar-cart-popup .buttons-container');
-  if (!buttonsContainer) {
-    buttonsContainer = document.createElement('div');
-    buttonsContainer.className = 'buttons-container';
-
-    // Empty Cart button
-    const emptyBtn = document.createElement('button');
-    emptyBtn.className = 'empty-btn';
-    emptyBtn.textContent = '🗑️ Empty Cart';
-    emptyBtn.onclick = emptyCart;
-    buttonsContainer.appendChild(emptyBtn);
-
-    // Checkout button
-    const checkoutBtn = document.createElement('a');
-    checkoutBtn.className = 'checkout-btn';
-    checkoutBtn.href = 'checkout.html';
-    checkoutBtn.textContent = 'Checkout';
-    buttonsContainer.appendChild(checkoutBtn);
-
-    // Append buttons container to popup
-    document.getElementById('navbar-cart-popup').appendChild(buttonsContainer);
-  }
 }
 
 
