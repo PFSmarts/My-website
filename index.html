@@ -155,15 +155,20 @@
       align-items: center;
     }
     .remove-btn {
-      background: #e74c3c;
-      border: none;
-      color: white;
-      padding: 5px 8px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 0.8rem;
-    }
-    .remove-btn:hover { background: #c0392b; }
+  background: #e0e0e0;       /* light gray for smooth blending */
+  border: none;
+  color: #0a3d62;            /* dark text for contrast */
+  padding: 5px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background 0.2s;
+}
+
+.remove-btn:hover {
+  background: #d0d0d0;       /* slightly darker on hover */
+}
+
 
     #total { text-align: right; font-weight: bold; font-size: 1.2rem; margin-top: 10px; }
     #checkout-btn { margin-top: 15px; display: block; width: 100%; }
