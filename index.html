@@ -31,16 +31,16 @@
 
 .cart-link {
   cursor: pointer;
-  background: #1e90ff;
-  color: #fff;
-  padding: 6px 12px;
-  border-radius: 6px;
+  color: #fff;              /* White text to match navbar */
   font-weight: bold;
-  text-decoration: none;
+  text-decoration: none;    /* Remove underline */
+  padding: 6px 12px;        
+  border-radius: 6px;
+  transition: background 0.2s;
 }
 
 .cart-link:hover {
-  background: #0a6ad8;
+  background: rgba(255,255,255,0.1); /* subtle highlight on hover */
 }
 
 #navbar-cart-count {
@@ -57,7 +57,7 @@
   position: absolute;
   top: 35px;
   left: 0;
-  width: 220px;
+  width: 240px;
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -77,6 +77,7 @@
 .navbar-cart-popup ul li {
   padding: 5px 0;
   border-bottom: 1px solid #eee;
+  font-size: 0.9rem;
 }
 
 .checkout-btn {
@@ -107,6 +108,7 @@
 .empty-btn:hover {
   background: #b52b27;
 }
+
 
     .job-card {
       background: #fff;
@@ -353,38 +355,45 @@
   function toggleMenu() {
     document.getElementById("menu").classList.toggle("active");
   }
+    
 function toggleNavbarCart() {
   const popup = document.getElementById('navbar-cart-popup');
   popup.style.display = popup.style.display === 'block' ? 'none' : 'block';
 }
 
-// Sync with body cart
 function updateNavbarCart() {
-  const items = document.getElementById('cart-items').children;
+  const bodyCartItems = document.getElementById('cart-items').children;
   const navbarList = document.getElementById('navbar-cart-items');
   const navbarCount = document.getElementById('navbar-cart-count');
   const navbarTotal = document.getElementById('navbar-total');
 
   navbarList.innerHTML = '';
   let total = 0;
-  for(let i=0;i<items.length;i++){
+
+  for (let i = 0; i < bodyCartItems.length; i++) {
     const li = document.createElement('li');
-    li.textContent = items[i].textContent.replace('❌','').trim();
+    li.textContent = bodyCartItems[i].textContent.replace('❌','').trim();
     navbarList.appendChild(li);
-    total += parseInt(items[i].textContent.match(/£(\d+)/)[1]);
+
+    // Extract price from body cart
+    const priceMatch = bodyCartItems[i].textContent.match(/£(\d+)/);
+    if(priceMatch) {
+      total += parseInt(priceMatch[1]);
+    }
   }
 
-  navbarCount.textContent = items.length;
+  navbarCount.textContent = bodyCartItems.length;
   navbarTotal.textContent = total;
 }
 
-// Override addToCart and removeItem to update navbar too
+// Override addToCart to update navbar
 const originalAddToCart = addToCart;
 addToCart = function(item, price) {
   originalAddToCart(item, price);
   updateNavbarCart();
 }
 
+// Override removeItem to update navbar
 const originalRemoveItem = removeItem;
 removeItem = function(button, price) {
   originalRemoveItem(button, price);
@@ -393,13 +402,11 @@ removeItem = function(button, price) {
 
 // Empty cart both in body and navbar
 function emptyCart() {
-  // Clear body cart
   document.getElementById('cart-items').innerHTML = '';
   document.getElementById('total').textContent = 'Total: £0';
-
-  // Clear navbar cart
   updateNavbarCart();
 }
+
 </script>
 </body>
 </html>
