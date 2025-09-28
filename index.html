@@ -24,6 +24,90 @@
       padding: 20px;
     }
 
+    .navbar-cart {
+  position: relative;
+  margin-left: 20px;
+}
+
+.cart-link {
+  cursor: pointer;
+  background: #1e90ff;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.cart-link:hover {
+  background: #0a6ad8;
+}
+
+#navbar-cart-count {
+  background: red;
+  color: #fff;
+  font-size: 0.75rem;
+  border-radius: 50%;
+  padding: 2px 6px;
+  margin-left: 5px;
+}
+
+.navbar-cart-popup {
+  display: none;
+  position: absolute;
+  top: 35px;
+  left: 0;
+  width: 220px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  z-index: 100;
+}
+
+.navbar-cart-popup ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 10px 0;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.navbar-cart-popup ul li {
+  padding: 5px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.checkout-btn {
+  display: block;
+  background: #0a3d62;
+  color: #fff;
+  text-align: center;
+  padding: 6px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.empty-btn {
+  display: block;
+  width: 100%;
+  background: #d9534f;
+  color: #fff;
+  border: none;
+  padding: 6px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.empty-btn:hover {
+  background: #b52b27;
+}
+
     .job-card {
       background: #fff;
       border-radius: 10px;
@@ -162,20 +246,19 @@
 <body>
   <!-- Navbar -->
 <nav class="navbar">
-  <div class="left-section">
-    <!-- Paste the cart code here -->
-    <div class="cart-dropdown">
-      <a href="javascript:void(0)" class="cart-link" onclick="toggleCartDropdown()">
-        🛒 Cart <span id="cart-count" class="cart-badge">0</span>
-      </a>
-      <div id="cart-popup" class="cart-popup">
-        <ul id="cart-items"></ul>
-        <p><b>Total: £<span id="total">0</span></b></p>
-        <button class="empty-btn" onclick="emptyCart()">🗑️ Empty Cart</button>
-        <a href="checkout.html" class="checkout-btn">Checkout</a>
-      </div>
-    </div>
+<!-- Navbar Cart -->
+<div class="navbar-cart">
+  <a href="javascript:void(0)" class="cart-link" onclick="toggleNavbarCart()">
+    🛒 Cart <span id="navbar-cart-count">0</span>
+  </a>
+  <div id="navbar-cart-popup" class="navbar-cart-popup">
+    <ul id="navbar-cart-items"></ul>
+    <p><b>Total: £<span id="navbar-total">0</span></b></p>
+    <button class="empty-btn" onclick="emptyCart()">🗑️ Empty Cart</button>
+    <a href="checkout.html" class="checkout-btn">Checkout</a>
   </div>
+</div>
+
 
 
   <div class="logo">🏠 <span>PF Smart Structures</span></div>
@@ -267,13 +350,57 @@
     function updateTotal() {
       document.getElementById('total').textContent = "Total: £" + total;
     }
-  </script>
-<script>
   function toggleMenu() {
     document.getElementById("menu").classList.toggle("active");
   }
-</script>
+function toggleNavbarCart() {
+  const popup = document.getElementById('navbar-cart-popup');
+  popup.style.display = popup.style.display === 'block' ? 'none' : 'block';
+}
 
+// Sync with body cart
+function updateNavbarCart() {
+  const items = document.getElementById('cart-items').children;
+  const navbarList = document.getElementById('navbar-cart-items');
+  const navbarCount = document.getElementById('navbar-cart-count');
+  const navbarTotal = document.getElementById('navbar-total');
+
+  navbarList.innerHTML = '';
+  let total = 0;
+  for(let i=0;i<items.length;i++){
+    const li = document.createElement('li');
+    li.textContent = items[i].textContent.replace('❌','').trim();
+    navbarList.appendChild(li);
+    total += parseInt(items[i].textContent.match(/£(\d+)/)[1]);
+  }
+
+  navbarCount.textContent = items.length;
+  navbarTotal.textContent = total;
+}
+
+// Override addToCart and removeItem to update navbar too
+const originalAddToCart = addToCart;
+addToCart = function(item, price) {
+  originalAddToCart(item, price);
+  updateNavbarCart();
+}
+
+const originalRemoveItem = removeItem;
+removeItem = function(button, price) {
+  originalRemoveItem(button, price);
+  updateNavbarCart();
+}
+
+// Empty cart both in body and navbar
+function emptyCart() {
+  // Clear body cart
+  document.getElementById('cart-items').innerHTML = '';
+  document.getElementById('total').textContent = 'Total: £0';
+
+  // Clear navbar cart
+  updateNavbarCart();
+}
+</script>
 </body>
 </html>
 
