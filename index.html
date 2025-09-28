@@ -268,7 +268,7 @@
     <ul id="navbar-cart-items"></ul>
     <div>Total: £<span id="navbar-total">0</span></div>
     <a href="checkout.html" class="checkout-btn">Checkout</a>
-    <button class="empty-btn" onclick="emptyCart()">Empty Cart</button>
+    <button class="empty-btn" onclick="emptyCart()">🗑️ Empty Cart</button>
   </div>
 </div>
 
@@ -350,7 +350,7 @@ function addToCart(item, price) {
   // Body cart
   const cartItems = document.getElementById('cart-items');
   const li = document.createElement('li');
-  li.innerHTML = `${item} - £${price} <button class='remove-btn' onclick='removeItem(this)'>-</button>`;
+  li.innerHTML = `${item} - £${price} <button class='remove-btn' onclick='removeItem(this)'>❌</button>`;
   cartItems.appendChild(li);
 
   // Add to array
@@ -361,7 +361,7 @@ function addToCart(item, price) {
   updateNavbarCart();
 }
 
-// Remove item from cart
+// Remove item from cart (works for body & navbar)
 function removeItem(button) {
   const li = button.parentElement;
   const text = li.textContent.split(" - £")[0];
@@ -372,7 +372,9 @@ function removeItem(button) {
   if (index !== -1) cartArray.splice(index, 1);
   totalAmount -= price;
 
+  // Remove from DOM
   li.remove();
+
   updateBodyTotal();
   updateNavbarCart();
 }
@@ -382,16 +384,17 @@ function updateBodyTotal() {
   document.getElementById('total').textContent = `Total: £${totalAmount}`;
 }
 
-// Update navbar cart (popup)
+// Update navbar cart popup
 function updateNavbarCart() {
   const navbarList = document.getElementById('navbar-cart-items');
   const navbarCount = document.getElementById('navbar-cart-count');
   const navbarTotal = document.getElementById('navbar-total');
 
   navbarList.innerHTML = "";
+
   cartArray.forEach(i => {
     const li = document.createElement('li');
-    li.textContent = `${i.item} - £${i.price}`;
+    li.innerHTML = `${i.item} - £${i.price} <button class='remove-btn' onclick='removeItem(this)'>❌</button>`;
     navbarList.appendChild(li);
   });
 
@@ -399,7 +402,7 @@ function updateNavbarCart() {
   navbarTotal.textContent = totalAmount;
 }
 
-// Empty the cart
+// Empty cart (both body & navbar)
 function emptyCart() {
   document.getElementById('cart-items').innerHTML = "";
   cartArray = [];
@@ -418,6 +421,7 @@ function toggleNavbarCart() {
 function toggleMenu() {
   document.getElementById("menu").classList.toggle("active");
 }
+
 
 </script>
 </body>
