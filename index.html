@@ -1,1 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PF Smart Structures</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+    body { background: #f9fafc; color: #333; }
+
+    header {
+      background: #0a3d62;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    header h1 { font-size: 2rem; margin-bottom: 5px; }
+    header p { font-size: 1rem; opacity: 0.9; }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .job-card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      margin: 15px;
+      width: 280px;
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.2s ease;
+    }
+    .job-card:hover { transform: translateY(-5px); }
+    .job-card h3 { margin-bottom: 10px; color: #0a3d62; }
+    .job-card p { margin-bottom: 15px; font-size: 0.9rem; }
+    .price { font-size: 1.2rem; font-weight: bold; color: #27ae60; margin-bottom: 15px; }
+
+    button {
+      background: #27ae60;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    button:hover { background: #219150; }
+
+    /* Cart */
+    #cart {
+      background: #fff;
+      margin: 20px auto;
+      max-width: 600px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+    }
+    #cart h2 { margin-bottom: 10px; text-align: center; color: #0a3d62; }
+    #cart ul { list-style: none; padding: 0; margin: 10px 0; }
+    #cart ul li { 
+      padding: 8px 0; 
+      border-bottom: 1px solid #eee; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center;
+    }
+    .remove-btn {
+      background: #e74c3c;
+      border: none;
+      color: white;
+      padding: 5px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+    .remove-btn:hover { background: #c0392b; }
+
+    #total { text-align: right; font-weight: bold; font-size: 1.2rem; margin-top: 10px; }
+    #checkout-btn { margin-top: 15px; display: block; width: 100%; }
+
+    footer {
+      background: #0a3d62;
+      color: #fff;
+      text-align: center;
+      padding: 15px;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .job-card { width: 90%; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>PF Smart Structures</h1>
+    <p>Professional Jobs & Services at Your Fingertips</p>
+  </header>
+
+  <!-- Services -->
+  <div class="container">
+    <div class="job-card">
+      <h3>Plumbing</h3>
+      <p>Fix leaks, install pipes, bathroom fittings and more.</p>
+      <div class="price">£50</div>
+      <button onclick="addToCart('Plumbing', 50)">Add to Cart</button>
+    </div>
+
+    <div class="job-card">
+      <h3>Electrical Work</h3>
+      <p>Wiring, installations, lighting, and repairs.</p>
+      <div class="price">£70</div>
+      <button onclick="addToCart('Electrical Work', 70)">Add to Cart</button>
+    </div>
+
+    <div class="job-card">
+      <h3>Kitchen Work</h3>
+      <p>Repairs, installations, tiling, and custom setups.</p>
+      <div class="price">£100</div>
+      <button onclick="addToCart('Kitchen Work', 100)">Add to Cart</button>
+    </div>
+
+    <div class="job-card">
+      <h3>Painting & Decoration</h3>
+      <p>Interior & exterior painting, wallpapering and finishing.</p>
+      <div class="price">£80</div>
+      <button onclick="addToCart('Painting & Decoration', 80)">Add to Cart</button>
+    </div>
+  </div>
+
+  <!-- Cart -->
+  <div id="cart">
+    <h2>Your Cart</h2>
+    <ul id="cart-items"></ul>
+    <div id="total">Total: £0</div>
+    <a href="checkout.html">
+      <button id="checkout-btn">Proceed to Checkout</button>
+    </a>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 PF Smart Structures. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    let total = 0;
+
+    function addToCart(item, price) {
+      const cartItems = document.getElementById('cart-items');
+      const li = document.createElement('li');
+      li.innerHTML = item + " - £" + price + 
+        " <button class='remove-btn' onclick='removeItem(this,"+price+")'>❌</button>";
+      cartItems.appendChild(li);
+
+      total += price;
+      updateTotal();
+    }
+
+    function removeItem(button, price) {
+      const li = button.parentElement;
+      li.remove();
+      total -= price;
+      updateTotal();
+    }
+
+    function updateTotal() {
+      document.getElementById('total').textContent = "Total: £" + total;
+    }
+  </script>
+
+</body>
+</html>
 
