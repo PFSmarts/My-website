@@ -259,17 +259,19 @@
   <!-- Navbar -->
 <nav class="navbar">
 <!-- Navbar Cart -->
+
 <div class="navbar-cart">
-  <a href="javascript:void(0)" class="cart-link" onclick="toggleNavbarCart()">
+  <span class="cart-link" onclick="toggleNavbarCart()">
     🛒 Cart <span id="navbar-cart-count">0</span>
-  </a>
+  </span>
   <div id="navbar-cart-popup" class="navbar-cart-popup">
     <ul id="navbar-cart-items"></ul>
-    <p><b>Total: £<span id="navbar-total">0</span></b></p>
-    <button class="empty-btn" onclick="emptyCart()">🗑️ Empty Cart</button>
+    <div>Total: £<span id="navbar-total">0</span></div>
     <a href="checkout.html" class="checkout-btn">Checkout</a>
+    <button class="empty-btn" onclick="emptyCart()">Empty Cart</button>
   </div>
 </div>
+
 
 
 
@@ -366,55 +368,70 @@
     document.getElementById("menu").classList.toggle("active");
   }
     
-function toggleNavbarCart() {
-  const popup = document.getElementById('navbar-cart-popup');
-  popup.style.display = popup.style.display === 'block' ? 'none' : 'block';
+let cartArray = []; // tracks {item, price}
+let totalAmount = 0;
+
+function addToCart(item, price) {
+  // Body cart
+  const cartItems = document.getElementById('cart-items');
+  const li = document.createElement('li');
+  li.innerHTML = `${item} - £${price} <button class='remove-btn' onclick='removeItem(this)'>-</button>`;
+  cartItems.appendChild(li);
+
+  // Add to array
+  cartArray.push({item, price});
+  totalAmount += price;
+
+  updateBodyTotal();
+  updateNavbarCart();
+}
+
+function removeItem(button) {
+  const li = button.parentElement;
+  const text = li.textContent.split(" - £")[0];
+  const price = parseInt(li.textContent.split("£")[1]);
+
+  // Remove from array
+  const index = cartArray.findIndex(i => i.item === text && i.price === price);
+  if(index !== -1) cartArray.splice(index, 1);
+  totalAmount -= price;
+
+  li.remove();
+  updateBodyTotal();
+  updateNavbarCart();
+}
+
+function updateBodyTotal() {
+  document.getElementById('total').textContent = `Total: £${totalAmount}`;
 }
 
 function updateNavbarCart() {
-  const bodyCartItems = document.getElementById('cart-items').children;
   const navbarList = document.getElementById('navbar-cart-items');
   const navbarCount = document.getElementById('navbar-cart-count');
   const navbarTotal = document.getElementById('navbar-total');
 
-  navbarList.innerHTML = '';
-  let total = 0;
-
-  for (let i = 0; i < bodyCartItems.length; i++) {
+  navbarList.innerHTML = "";
+  cartArray.forEach(i => {
     const li = document.createElement('li');
-    li.textContent = bodyCartItems[i].textContent.replace('❌','').trim();
+    li.textContent = `${i.item} - £${i.price}`;
     navbarList.appendChild(li);
+  });
 
-    // Extract price from body cart
-    const priceMatch = bodyCartItems[i].textContent.match(/£(\d+)/);
-    if(priceMatch) {
-      total += parseInt(priceMatch[1]);
-    }
-  }
-
-  navbarCount.textContent = bodyCartItems.length;
-  navbarTotal.textContent = total;
+  navbarCount.textContent = cartArray.length;
+  navbarTotal.textContent = totalAmount;
 }
 
-// Override addToCart to update navbar
-const originalAddToCart = addToCart;
-addToCart = function(item, price) {
-  originalAddToCart(item, price);
-  updateNavbarCart();
-}
-
-// Override removeItem to update navbar
-const originalRemoveItem = removeItem;
-removeItem = function(button, price) {
-  originalRemoveItem(button, price);
-  updateNavbarCart();
-}
-
-// Empty cart both in body and navbar
 function emptyCart() {
-  document.getElementById('cart-items').innerHTML = '';
-  document.getElementById('total').textContent = 'Total: £0';
+  document.getElementById('cart-items').innerHTML = "";
+  cartArray = [];
+  totalAmount = 0;
+  updateBodyTotal();
   updateNavbarCart();
+}
+
+function toggleNavbarCart() {
+  const popup = document.getElementById('navbar-cart-popup');
+  popup.style.display = popup.style.display === 'block' ? 'none' : 'block';
 }
 
 </script>
