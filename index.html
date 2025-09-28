@@ -500,6 +500,16 @@ function toggleMenu() {
   document.getElementById("menu").classList.toggle("active");
 }
 
+// Close navbar cart when clicking outside
+document.addEventListener('click', function(event) {
+  const popup = document.getElementById('navbar-cart-popup');
+  const cartLink = document.querySelector('.cart-link');
+
+  // If click is NOT on the popup or the cart link, hide popup
+  if (!popup.contains(event.target) && !cartLink.contains(event.target)) {
+    popup.style.display = 'none';
+  }
+});
 
 </script>
 </body>
