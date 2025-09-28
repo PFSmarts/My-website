@@ -94,8 +94,87 @@
       .job-card { width: 90%; }
     }
   </style>
+  <style>
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #0a3d62;
+    padding: 10px 20px;
+    color: #fff;
+  }
+  .navbar .logo {
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+  }
+  .navbar .logo span {
+    margin-left: 8px;
+    font-weight: bold;
+  }
+  .navbar ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+  }
+  .navbar ul li {
+    margin-left: 20px;
+  }
+  .navbar ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+  }
+  .hamburger div {
+    width: 25px;
+    height: 3px;
+    background: #fff;
+    margin: 4px 0;
+  }
+  @media (max-width: 768px) {
+    .navbar ul {
+      display: none;
+      flex-direction: column;
+      background: #0a3d62;
+      position: absolute;
+      top: 60px;
+      right: 0;
+      width: 200px;
+      text-align: right;
+      padding: 10px;
+    }
+    .navbar ul.active {
+      display: flex;
+    }
+    .hamburger {
+      display: flex;
+    }
+  }
+</style>
+
 </head>
 <body>
+  <!-- Navbar -->
+<nav class="navbar">
+  <div class="logo">🏠 <span>PF Smart Structures</span></div>
+  <ul id="menu">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="hamburger" onclick="toggleMenu()">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</nav>
+
 
   <header>
     <h1>PF Smart Structures</h1>
@@ -172,6 +251,11 @@
       document.getElementById('total').textContent = "Total: £" + total;
     }
   </script>
+<script>
+  function toggleMenu() {
+    document.getElementById("menu").classList.toggle("active");
+  }
+</script>
 
 </body>
 </html>
