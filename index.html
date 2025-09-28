@@ -82,15 +82,22 @@
 
 .checkout-btn {
   display: block;
-  background: #0a3d62;
-  color: #fff;
+  background: #5dade2;       /* lighter blue */
+  color: #fff;               /* white text */
   text-align: center;
   padding: 6px;
   border-radius: 5px;
   text-decoration: none;
   font-weight: bold;
   margin-top: 5px;
+  transition: background 0.2s, transform 0.2s;
 }
+
+.checkout-btn:hover {
+  background: #3498db;       /* slightly darker blue on hover */
+  transform: translateY(-2px); /* subtle lift effect */
+}
+
 
 .empty-btn {
   display: block;
