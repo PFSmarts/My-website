@@ -162,6 +162,22 @@
 <body>
   <!-- Navbar -->
 <nav class="navbar">
+  <div class="left-section">
+    <!-- Paste the cart code here -->
+    <div class="cart-dropdown">
+      <a href="javascript:void(0)" class="cart-link" onclick="toggleCartDropdown()">
+        🛒 Cart <span id="cart-count" class="cart-badge">0</span>
+      </a>
+      <div id="cart-popup" class="cart-popup">
+        <ul id="cart-items"></ul>
+        <p><b>Total: £<span id="total">0</span></b></p>
+        <button class="empty-btn" onclick="emptyCart()">🗑️ Empty Cart</button>
+        <a href="checkout.html" class="checkout-btn">Checkout</a>
+      </div>
+    </div>
+  </div>
+
+
   <div class="logo">🏠 <span>PF Smart Structures</span></div>
   <ul id="menu">
     <li><a href="index.html">Home</a></li>
