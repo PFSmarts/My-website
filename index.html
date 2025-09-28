@@ -74,11 +74,19 @@
   overflow-y: auto;
 }
 
+/* Navbar cart popup items text color */
 .navbar-cart-popup ul li {
   padding: 5px 0;
   border-bottom: 1px solid #eee;
   font-size: 0.9rem;
+  color: #333; /* Dark text so it's visible */
 }
+.navbar-cart-popup div, 
+.navbar-cart-popup .checkout-btn, 
+.navbar-cart-popup .empty-btn {
+  color: #0a3d62; /* or #333 for dark blue/gray */
+}
+
 .checkout-btn {
   display: block;
   background: #2e86c1;       /* medium blue, noticeable but smooth */
@@ -267,8 +275,8 @@
   <div id="navbar-cart-popup" class="navbar-cart-popup">
     <ul id="navbar-cart-items"></ul>
     <div>Total: £<span id="navbar-total">0</span></div>
-    <a href="checkout.html" class="checkout-btn">Checkout</a>
     <button class="empty-btn" onclick="emptyCart()">🗑️ Empty Cart</button>
+    <a href="checkout.html" class="checkout-btn">Checkout</a>
   </div>
 </div>
 
