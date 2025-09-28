@@ -57,30 +57,32 @@
   position: absolute;
   top: 35px;
   left: 0;
-  width: 240px;
+  width: 280px; /* slightly wider for more items */
+  max-height: 300px; /* max height with scroll if overflow */
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 10px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   z-index: 100;
+  overflow-y: auto; /* scroll if items exceed max-height */
 }
 
-.navbar-cart-popup ul {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 10px 0;
-  max-height: 150px;
-  overflow-y: auto;
-}
-
-/* Navbar cart popup items text color */
+/* Items inside popup with border */
 .navbar-cart-popup ul li {
-  padding: 5px 0;
-  border-bottom: 1px solid #eee;
+  padding: 5px 8px;
+  border-bottom: 1px solid #ccc; /* border between items */
   font-size: 0.9rem;
-  color: #333; /* Dark text so it's visible */
+  color: #333; /* make text visible */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
+
+.navbar-cart-popup ul li:last-child {
+  border-bottom: none; /* remove border for last item */
+}
+
 .navbar-cart-popup div, 
 .navbar-cart-popup .checkout-btn, 
 .navbar-cart-popup .empty-btn {
