@@ -57,37 +57,72 @@
   position: absolute;
   top: 35px;
   left: 0;
-  width: 280px; /* slightly wider for more items */
-  max-height: 300px; /* max height with scroll if overflow */
+  width: 260px;                  /* initial width */
+  max-height: 300px;             /* max height, scrolls if too many items */
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 10px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   z-index: 100;
-  overflow-y: auto; /* scroll if items exceed max-height */
+  overflow-y: auto;              /* scroll if too tall */
 }
 
-/* Items inside popup with border */
+.navbar-cart-popup ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 10px 0;
+}
+
 .navbar-cart-popup ul li {
   padding: 5px 8px;
-  border-bottom: 1px solid #ccc; /* border between items */
+  margin-bottom: 6px;            /* spacing between items */
+  border: 1px solid #ccc;        /* border for each item */
+  border-radius: 4px;
   font-size: 0.9rem;
-  color: #333; /* make text visible */
+  color: #333;                   /* make text visible */
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.navbar-cart-popup ul li:last-child {
-  border-bottom: none; /* remove border for last item */
+.navbar-cart-popup .buttons-container {
+  display: flex;
+  gap: 5px;
+  margin-top: 8px;
 }
 
-.navbar-cart-popup div, 
-.navbar-cart-popup .checkout-btn, 
-.navbar-cart-popup .empty-btn {
-  color: #0a3d62; /* or #333 for dark blue/gray */
+.navbar-cart-popup .empty-btn,
+.navbar-cart-popup .checkout-btn {
+  flex: 1;
+  text-align: center;
+  padding: 6px 0;
+  font-weight: bold;
+  border-radius: 5px;
+  transition: background 0.2s;
 }
+
+.navbar-cart-popup .empty-btn {
+  background: #dcdcdc; 
+  color: #0a3d62;
+  border: none;
+}
+
+.navbar-cart-popup .empty-btn:hover {
+  background: #c0c0c0;
+}
+
+.navbar-cart-popup .checkout-btn {
+  background: #2e86c1;
+  color: #fff;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.navbar-cart-popup .checkout-btn:hover {
+  background: #1b4f72;
+}
+
 
 .checkout-btn {
   display: block;
