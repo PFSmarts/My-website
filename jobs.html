@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jobs - PF Smart Structures</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f9fafc;
+      color: #333;
+    }
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #0a3d62;
+      padding: 10px 20px;
+      color: #fff;
+    }
+    .navbar .logo {
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+    }
+    .navbar .logo span {
+      margin-left: 8px;
+      font-weight: bold;
+    }
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      margin: 0;
+      padding: 0;
+    }
+    .navbar ul li {
+      margin-left: 20px;
+    }
+    .navbar ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background: #fff;
+      margin: 4px 0;
+    }
+    @media (max-width: 768px) {
+      .navbar ul {
+        display: none;
+        flex-direction: column;
+        background: #0a3d62;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 200px;
+        text-align: right;
+        padding: 10px;
+      }
+      .navbar ul.active {
+        display: flex;
+      }
+      .hamburger {
+        display: flex;
+      }
+    }
+    /* Jobs */
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+    .job-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .job {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .job h3 {
+      color: #0a3d62;
+    }
+    .job p {
+      font-size: 1rem;
+      margin: 10px 0;
+    }
+    .job button {
+      background: #0a3d62;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .job button:hover {
+      background: #074473;
+    }
+    /* Cart */
+    .cart {
+      margin-top: 40px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .cart h2 {
+      color: #0a3d62;
+    }
+    .cart ul {
+      list-style: none;
+      padding: 0;
+    }
+    .cart ul li {
+      padding: 8px 0;
+      border-bottom: 1px solid #ddd;
+    }
+    .checkout-btn {
+      margin-top: 15px;
+      display: inline-block;
+      background: #0a3d62;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">🏠 <span>PF Smart Structures</span></div>
+    <ul id="menu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="jobs.html">Jobs</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="hamburger" onclick="toggleMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </nav>
+
+  <!-- Jobs Section -->
+  <div class="container">
+    <h1>Available Jobs</h1>
+    <div class="job-list">
+      <div class="job">
+        <h3>Plumbing</h3>
+        <p>£50</p>
+        <button onclick="addToCart('Plumbing', 50)">Add to Cart</button>
+      </div>
+      <div class="job">
+        <h3>Electrical Work</h3>
+        <p style="color: red; font-weight: bold;">🚫 Not Available</p>
+        <div style="background: #ffe5e5; color: #b00000; padding: 10px; border-radius: 5px; font-weight: bold;">
+          This service is currently unavailable.
+        </div>
+      </div>
+      <div class="job">
+        <h3>Painting</h3>
+        <p>£40</p>
+        <button onclick="addToCart('Painting', 40)">Add to Cart</button>
+      </div>
+      <div class="job">
+        <h3>Carpentry</h3>
+        <p>£60</p>
+        <button onclick="addToCart('Carpentry', 60)">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Cart -->
+    <div class="cart">
+      <h2>Your Cart</h2>
+      <ul id="cart-items"></ul>
+      <p><b>Total: £<span id="total">0</span></b></p>
+      <a href="checkout.html" class="checkout-btn">Checkout</a>
+    </div>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById("menu").classList.toggle("active");
+    }
+
+    let cart = [];
+    let total = 0;
+
+    function addToCart(job, price) {
+      cart.push({ job, price });
+      total += price;
+      updateCart();
+    }
+
+    function updateCart() {
+      const cartItems = document.getElementById("cart-items");
+      cartItems.innerHTML = "";
+      cart.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = `${item.job} - £${item.price}`;
+        cartItems.appendChild(li);
+      });
+      document.getElementById("total").textContent = total;
+    }
+  </script>
+</body>
+</html>
