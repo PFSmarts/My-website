@@ -85,19 +85,16 @@
 #navbar-cart-items li {
   background: #fff;          
   color: #000;               
-  border: 1px solid #000;    
-  border-radius: 6px;        
-  padding: 5px 8px;
+  border: 3px solid #000;      /* thick black border */
+  border-radius: 12px;         /* curvy edges */
+  padding: 8px 12px;
   list-style: none;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.9rem;
-  min-width: 100px;          /* ensures li is visible */
-  box-sizing: border-box;    
-  position: relative;         /* ensures border wraps everything */
-  margin-bottom: 4px;        /* spacing between items */
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* optional card effect */
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+  box-shadow: none;            /* remove card shadow */
 }
 
 #navbar-cart-items li button.remove-btn {
